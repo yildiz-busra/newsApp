@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Menu({ categories, setCurrentCategory }) {
+function Menu({ categories, setCurrentCategory, filterArticlesByCategory }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleCategoryClick = (category) => {
-    setCurrentCategory(category);
+    filterArticlesByCategory(category.name);
+    //setCurrentCategory(category.name);
     if (window.innerWidth <= 768) {
-      setIsMenuOpen(false); // Close menu after selection on small screens
+      setIsMenuOpen(false);
     }
   };
 
@@ -25,14 +26,13 @@ function Menu({ categories, setCurrentCategory }) {
           ☰
         </button>
       </div>
-      <div
-        className={`lg:block ${isMenuOpen ? "block" : "hidden"}`}
-      >
+      <div className={`lg:block ${isMenuOpen ? "block" : "hidden"}`}>
         {categories.map((category) => (
           <div className="lg:w-full card m-2" key={category.name}>
             <Link
+              //to="/"
               onClick={() => handleCategoryClick(category)}
-              className="card text-xl font-semibold text-700 no-underline block lg:my-2 ml-4"
+              className="block text-xl font-semibold text-700 no-underline lg:my-2 ml-4"
             >
               {category.name}
             </Link>

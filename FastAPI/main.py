@@ -217,13 +217,13 @@ def getArticleCategory(article_url):
             return "Article could not be retrieved"
 
         soup = BeautifulSoup(response.text, "html.parser")
-        container = soup.find("nav", {"class": "hbbcLeft"})
-        articleCategory_tag = container.find_all("a")
+        container = soup.find_all("span", {"class": "hbbcText"})
+        articleCategory_tag = container[1].find("a")
 
         if not articleCategory_tag:
             return "Category not found"
 
-        articleCategory = articleCategory_tag[1].get_text().strip()
+        articleCategory = articleCategory_tag.text
         return articleCategory
 
     except requests.RequestException as e:
