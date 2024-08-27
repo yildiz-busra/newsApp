@@ -5,12 +5,12 @@ import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
 import "primeicons/primeicons.css";
 
-function SearchBar({setCurrentCategory}) {
+function SearchBar({setCurrentCategory, filterArticlesByCategory}) {
   const [searchTerm, setSearchTerm] = useState("");
   const handleChange = (e) => {
     const searchValue = e.target.value;
     setSearchTerm(searchValue);
-    setCurrentCategory(searchTerm);
+    filterArticlesByCategory(searchTerm);
   };
 
   return (

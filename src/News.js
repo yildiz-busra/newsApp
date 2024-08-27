@@ -18,50 +18,67 @@ function News({
   const [currentPageData, setCurrentPageData] = useState([]);
   const [filteredArticles, setFilteredArticles] = useState(articles);
 
-  useEffect(() => {
-    // Filter articles based on the current category
-    const filtered = currentCategory
-      ? articles.filter((article) =>
-          article.category.toLowerCase().includes(currentCategory.toLowerCase())
-        )
-      : articles;
+  // useEffect(() => {
+  //   //Filter articles based on the current category
+  //   const filtered = currentCategory //&& typeof currentCategory === 'string'
+  //     ? articles.filter((article) =>
+  //         article.category.toLowerCase().includes(currentCategory.toLowerCase())
+  //       )
+  //     : articles;
+
+  //   setFilteredArticles(filtered);
+  //   onPageChange(0, 20);
+  // }, [currentCategory, articles]);
+
+  const filterArticlesByCategory = (category) => {
+    const filtered = articles.filter((article) =>
+      article.category.toLowerCase().includes(category.toLowerCase())
+    );
 
     setFilteredArticles(filtered);
-    onPageChange(0, 20);
-  }, [currentCategory, articles]);
+    setCurrentCategory(category);
+  };
+
+  useEffect(() => {
+    setFilteredArticles(articles);
+  }, [articles]);
 
   const onPageChange = (first, rows) => {
     const paginatedArticles = filteredArticles.slice(first, first + rows);
     setCurrentPageData(paginatedArticles);
   };
 
-  const handleSearch = (searchTerm) => {
-    // Filter articles based on search term
-    const searchFiltered = filteredArticles.filter((article) =>
-      article.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  // const handleSearch = (searchTerm) => {
+  //   // Filter articles based on search term
+  //   const searchFiltered = filteredArticles.filter((article) =>
+  //     article.category.name.toLowerCase().includes(searchTerm.toLowerCase())
+  //   );
 
-    setFilteredArticles(searchFiltered);
-    onPageChange(0, 20); // Reset to the first page and update the displayed articles
-  }; 
+  //   setFilteredArticles(searchFiltered);
+  //   onPageChange(0, 20);
+  // };
 
   return (
     <div className="bg-bluegray-100">
       <Navi />
       <div className="grid nested-grid">
         <div className="w-full">
-          <SearchBar setCurrentCategory={setCurrentCategory} onSearch={handleSearch}/>
+          <SearchBar
+            setCurrentCategory={setCurrentCategory}
+            filterArticlesByCategory={filterArticlesByCategory}
+          />
         </div>
         <div className="lg:col-2 lg:pt-7">
           <Menu
             categories={categories}
             setCurrentCategory={setCurrentCategory}
+            filterArticlesByCategory={filterArticlesByCategory}
           />
         </div>
 
         <div className="lg:col-9">
           <Cards
-            articles={currentPageData}
+            articles={filteredArticles}
             setCurrentArticle={setCurrentArticle}
           />
           <NewsPaginator
