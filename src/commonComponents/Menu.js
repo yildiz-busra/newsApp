@@ -22,7 +22,7 @@ function Menu({ categories, setCurrentCategory }) {
           onClick={toggleMenu}
           className="text-xl m-4 p-2 border-200 border-round-md"
         >
-          ☰ {/* Simple Hamburger Icon */}
+          ☰
         </button>
       </div>
       <div
