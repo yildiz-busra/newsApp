@@ -27,7 +27,7 @@ function News({
       : articles;
 
     setFilteredArticles(filtered);
-    onPageChange(0, 20); // Reset to the first page and update the displayed articles
+    onPageChange(0, 20);
   }, [currentCategory, articles]);
 
   const onPageChange = (first, rows) => {
